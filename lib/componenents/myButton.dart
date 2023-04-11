@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+  const SignIn({super.key, required this.signIn});
+  final Function()? signIn;
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +15,15 @@ class SignIn extends StatelessWidget {
         color: Colors.black,
       ),
       alignment: Alignment.center,
-      child: Text(
-        'Sign In',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+      child: GestureDetector(
+        onTap: signIn,
+        child: Text(
+          'Sign In',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

@@ -17,5 +17,6 @@
         "**/web": true,
         "web": true
     },
-    "explorerExclude.backup": {}
+    "explorerExclude.backup": {},
+    "cmake.sourceDirectory": "${workspaceFolder}/linux"
 }

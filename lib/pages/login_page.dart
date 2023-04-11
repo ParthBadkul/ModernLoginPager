@@ -1,12 +1,69 @@
 import 'package:easueuth/componenents/myButton.dart';
 import 'package:easueuth/componenents/myTextFiled.dart';
 import 'package:easueuth/componenents/squareTile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
-  final usernameController = TextEditingController();
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+
   final passWordController = TextEditingController();
+
+  void signIn() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    // awaiting for response
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passWordController.text);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code == 'user-not-found') {
+        wrongEmail();
+      } else if (e.code == 'wrong-password') {
+        wrongPassword();
+      }
+    }
+
+    // pop Circular
+  }
+
+  void wrongEmail() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Incorrect Email'),
+        );
+      },
+    );
+  }
+
+  void wrongPassword() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Incorrect Password'),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +103,7 @@ class LoginPage extends StatelessWidget {
                 height: 50,
               ),
               MytextField(
-                controller: usernameController,
+                controller: emailController,
                 hintText: "Username",
                 obsecure: false,
               ),
@@ -81,12 +138,7 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
 
-              GestureDetector(
-                onTap: () {
-                  print('object');
-                },
-                child: SignIn(),
-              ),
+              SignIn(signIn: signIn),
 
               //or continue with
               SizedBox(
