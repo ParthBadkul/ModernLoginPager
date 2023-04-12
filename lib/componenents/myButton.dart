@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
-  const SignIn({super.key, required this.signIn});
+  const SignIn({super.key, required this.signIn, required this.task});
   final Function()? signIn;
+  final String task;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class SignIn extends StatelessWidget {
       child: GestureDetector(
         onTap: signIn,
         child: Text(
-          'Sign In',
+          '${task}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,

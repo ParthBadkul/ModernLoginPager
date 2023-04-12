@@ -5,24 +5,47 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? pa;
 
-  LoginPage({super.key, required this.pa});
+  RegisterPage({super.key, required this.pa});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
 late final Function()? onTap;
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
 
   final passWordController = TextEditingController();
-  void onTap() {}
 
-  void signIn() async {
+  final rePasswordController = TextEditingController();
+
+  // void signIn() async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return const Center(
+  //         child: CircularProgressIndicator(),
+  //       );
+  //     },
+  //   );
+  //   // awaiting for response
+  //   try {
+  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //         email: emailController.text, password: passWordController.text);
+  //     Navigator.pop(context);
+  //   } on FirebaseAuthException catch (e) {
+  //     Navigator.pop(context);
+  //     wrongEmailPassword(e.code);
+  //   }
+
+  //   // pop Circular
+  // }
+
+  void signUp() async {
     showDialog(
       context: context,
       builder: (context) {
@@ -32,16 +55,28 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
     // awaiting for response
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passWordController.text);
+    if (passWordController.text == rePasswordController.text) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passWordController.text,
+        );
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        Navigator.pop(context);
+        wrongEmailPassword(e.code);
+      }
+    } else {
       Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      wrongEmailPassword(e.code);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Password doesnt match'),
+          );
+        },
+      );
     }
-
-    // pop Circular
   }
 
   void wrongEmailPassword(String message) {
@@ -67,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 //logo
                 const Icon(
@@ -77,11 +112,11 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Welcome , back
                 const SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
 
                 const Text(
-                  'Welcome Back you\'ve been missed',
+                  'Lets Create your Account',
                   style: TextStyle(
                     fontSize: 16,
                     letterSpacing: 1.3,
@@ -111,6 +146,13 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 15,
                 ),
+                MytextField(
+                    controller: rePasswordController,
+                    hintText: 'Confirm Password',
+                    obsecure: true),
+                const SizedBox(
+                  height: 15,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -130,8 +172,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 SignIn(
-                  signIn: signIn,
-                  task: 'Sign In',
+                  signIn: signUp,
+                  task: 'Sign Up',
                 ),
 
                 //or continue with
@@ -186,13 +228,13 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member ?',
+                      'Already have an account ?',
                       style: TextStyle(color: Colors.black38),
                     ),
                     GestureDetector(
                       onTap: widget.pa,
                       child: Text(
-                        '   Register now',
+                        '   Sign In',
                         style: TextStyle(
                           color: Colors.lightBlue[300],
                           fontWeight: FontWeight.bold,
