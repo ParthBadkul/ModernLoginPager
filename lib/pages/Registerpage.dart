@@ -253,6 +253,6 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       ),
-    );
+    ).animate().blurXY(begin: 10, end: 0);
   }
 }

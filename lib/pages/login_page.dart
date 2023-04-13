@@ -213,6 +213,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
+    ).animate().blurXY(begin: 10, end: 0);
   }
 }
