@@ -175,13 +175,14 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     SqaureTile(
                       imagePath: 'assets/images/apple.png',
-                      tap: () => Authservice().signInWithGoogle(),
+                      tap: () => null,
                     ),
                     SizedBox(
                       width: 15,
                     ),
                     SqaureTile(
-                        tap: () {}, imagePath: 'assets/images/google.png'),
+                        tap: () => Authservice().signInWithGoogle(),
+                        imagePath: 'assets/images/google.png'),
                   ],
                 ),
                 // not a member

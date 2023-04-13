@@ -216,13 +216,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SqaureTile(
-                        tap: () => Authservice().signInWithGoogle(),
-                        imagePath: 'assets/images/apple.png'),
+                        tap: () {}, imagePath: 'assets/images/apple.png'),
                     SizedBox(
                       width: 15,
                     ),
                     SqaureTile(
-                        tap: () {}, imagePath: 'assets/images/google.png'),
+                        tap: () => Authservice().signInWithGoogle(),
+                        imagePath: 'assets/images/google.png'),
                   ],
                 ),
                 // not a member
