@@ -1,9 +1,11 @@
 import 'package:easueuth/componenents/myButton.dart';
 import 'package:easueuth/componenents/myTextFiled.dart';
 import 'package:easueuth/componenents/squareTile.dart';
+import 'package:easueuth/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? pa;
@@ -122,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     letterSpacing: 1.3,
                     color: Colors.black38,
                   ),
-                ),
+                ).animate().fadeIn(delay: 100.milliseconds).slideY(),
 
                 // username Textfield
                 const SizedBox(
@@ -213,11 +215,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SqaureTile(imagePath: 'assets/images/apple.png'),
+                    SqaureTile(
+                        tap: () => Authservice().signInWithGoogle(),
+                        imagePath: 'assets/images/apple.png'),
                     SizedBox(
                       width: 15,
                     ),
-                    SqaureTile(imagePath: 'assets/images/google.png'),
+                    SqaureTile(
+                        tap: () {}, imagePath: 'assets/images/google.png'),
                   ],
                 ),
                 // not a member
